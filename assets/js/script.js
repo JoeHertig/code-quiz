@@ -12,50 +12,6 @@ var globalIndex = 0;
 var time = questions.length * 15;
 var timerId;
 
-var quizStart = function () {
-  // delete quizStart
-  var quizStartEl = document.getElementById("first-page");
-  quizStartEl.setAttribute("class", "delete");
-
-  // un delete questions section
-  questionsEl.removeAttribute("class");
-
-  // start timer
-  timerId = setInterval(clockTick, 1000);
-
-  // show time
-  timerEl.textContent = time;
-
-  getQuestion();
-};
-
-var findQuestion = function () {
-  // find question from array
-  var currentQuestion = questions[globalIndex];
-
-  // update title with current question
-  var titleEl = document.getElementById("q");
-  titleEl.textContent = currentQuestion.title;
-
-  // clear old question "o"
-  optionsEl.innerHTML = "";
-
-  // loop options
-  currentQuestion.options.forEach(function (option, i) {
-    // creating new buttons
-    var optionNode = document.createElement("button");
-    optionNode.setAttribute("class", "option");
-    optionNode.setAttribute("value", option);
-
-    optionNode.textContent = i + 1 + ". " + option;
-
-    //click even listener
-    optionNode.onclick = //next Function;
-      // add to page
-      optionsEl.appendChild(optionNode);
-  });
-};
-
 // Questions start //
 var questions = [
   {
@@ -96,6 +52,144 @@ var questions = [
 ];
 /* Questions end */
 
+var quizStart = function () {
+  // delete quizStart
+  var quizStartEl = document.getElementById("first-page");
+  quizStartEl.setAttribute("class", "delete");
+
+  // un delete questions section
+  questionsEl.removeAttribute("class");
+
+  // start timer
+  timerId = setInterval(clockTick, 1000);
+
+  // show time
+  timerEl.textContent = time;
+
+  getQuestion();
+};
+
+var findQuestion = function () {
+  // find question from array
+  var currentQuestion = questions[globalIndex];
+
+  // update title with current question
+  var titleEl = document.getElementById("q");
+  titleEl.textContent = currentQuestion.title;
+
+  // clear old question "o"
+  optionsEl.innerHTML = "";
+
+  // loop options
+  currentQuestion.options.forEach(function (option, i) {
+    // creating new buttons
+    var optionNode = document.createElement("button");
+    optionNode.setAttribute("class", "option");
+    optionNode.setAttribute("value", option);
+
+    optionNode.textContent = i + 1 + ". " + option;
+
+    //click even listener
+    optionNode.onclick = questionClick;
+
+    // add to page
+    optionsEl.appendChild(optionNode);
+  });
+};
+
+var questionClick = function () {
+  // checking answer
+  if (this.value !== questions[globalIndex].a) {
+    // subtract time
+    time -= 15;
+
+    if (time < 0) {
+      time = 0;
+    }
+    // display corrected time
+    timerEl.textContent = time;
+    // wrong text style
+    answeredEl.textContent = "Wrong!";
+    answeredEl.style.opacity = "0.5";
+  } else {
+    answeredEl.textContent = "Correct!";
+    answeredEl.style.opacity = "0.5";
+  }
+
+  // what player anwered with
+  answeredEl.setAttribute("class", "answered");
+  setTimeout(function () {
+    answeredEl.setAttribute("class", "answered delete");
+  }, 1000);
+
+  // next question
+  globalIndex++;
+
+  // time checker
+  if (globalIndex === questions.length) {
+    quizEnd();
+  } else {
+    findQuestion();
+  }
+};
+
+var quizEnd = function () {
+  // stop timer
+  clearInterval(timerId);
+
+  // show end quiz
+  var endQuizEl = document.getElementsById("end-quiz");
+  endQuizEl.removeAttribute("class");
+
+  // show final score
+  var finalScoreEl = document.getElementById("final-score");
+  finalScoreEl.textContent = time;
+
+  //hide questions section
+  questionsEl.setAttribute("class", "hide");
+};
+
+var clockTick = function () {
+  // update time
+  time--;
+  timerEl.textContent = time;
+
+  // check if user ran out of time
+  if (time <= 0) {
+    quizEnd();
+  }
+};
+
+var saveHighScore = function () {
+  // get value of input box
+  var playerName = nameEl.value.trim();
+
+  if (playerName !== "") {
+    //get saved scores from lacalstorage, or if not any, set to empty array
+    var playerScore =
+      JSON.parse(window.localStorage.getItem("player-score")) || [];
+
+    //format new score object for current user
+    var newScore = {
+      score: time,
+      playername: playerName,
+    };
+
+    //save to localstorage
+    playerScore.push(newScore);
+    window.localStorage.setItem("highscores", JSON.stringify(playerScore));
+
+    // redirect to next page
+    highScore();
+  }
+};
+
+var checkForEnter = function (event) {
+  if (event.key === "Enter") {
+    saveHighScore();
+  }
+};
+
 var highScore = function () {
   // localStorage score or setting to empty array
   var playerScore =
@@ -124,5 +218,13 @@ var clearHighScores = function () {
 
 document.getElementById("#refresh").onclick = clearHighScores;
 
-// running function
-highScore();
+// // running function
+// highScore();
+
+submitBtn.onclick = saveHighscore;
+
+startBtn.addEventListener("click", quizStart);
+
+nameEl.onkeyup = checkForEnter;
+
+quizStart();
