@@ -52,4 +52,8 @@ header a {
 .btn:hover {
   background: var(--hover-color);
 }
+
+.delete {
+  display: none;
+}
 /* #endregion */

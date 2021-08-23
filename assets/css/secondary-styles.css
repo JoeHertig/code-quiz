@@ -21,11 +21,11 @@ body h1 {
   margin-bottom: 0px;
 }
 
-.wrapper {
+.container {
   margin: 100px;
 }
 
-.wrapper ol {
+.container ol {
   background-color: var(--light);
   height: 25px;
   width: 360px;

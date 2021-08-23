@@ -1,6 +1,21 @@
+// dom elements
 var timerEl = document.querySelector("#countdown");
 var startBtn = document.querySelector("#start");
-var questionsEl = document.querySelector("#main-questions");
+var questionsEl = document.querySelector("#questions");
+var optionsEl = document.querySelector("#o");
+var submitBtn = document.querySelector("#submit");
+var nameEl = document.querySelector("#player-name");
+var answeredEl = document.querySelector("#answered");
+
+// global variables
+var globalIndex = 0;
+var time = questions.length * 15;
+var timerId;
+
+var quizStart = function () {
+  // delete quizStart
+  var quizStartEl = document.getElementById("first-page");
+};
 
 // Questions start //
 var questions = [
@@ -53,10 +68,12 @@ var highScore = function () {
   });
 
   playerScore.forEach(function (score) {
+    // Made li tag
     var listItemEl = document.createElement("li");
     listItemEl.textContent = score.initials + " - " + score.score;
 
-    var olEl = document.querySelector("#player-score");
+    // display on page
+    var olEl = document.getElementById("player-score");
     olEl.appendChild(listItemEl);
   });
 };
@@ -66,6 +83,7 @@ var clearHighScores = function () {
   window.location.reload();
 };
 
-document.querySelector("#refresh").onclick = clearHighScores;
+document.getElementById("#refresh").onclick = clearHighScores;
 
+// running function
 highScore();

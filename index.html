@@ -9,12 +9,17 @@
   </head>
 
   <body>
+    <!--Header Section-->
     <header>
       <a href="./high-score.html">View high scores</a>
       <div>Time: <span id="countdown">0</span></div>
     </header>
+    <!--Header end-->
+
+    <!--Main Section-->
     <main class="container">
-      <div id="main-questions">
+      <!--Quiz Start Section-->
+      <section id="first-page">
         <h1>Coding Quiz Challenge</h1>
         <p>
           Try to answer the following code-related questions within the time
@@ -23,8 +28,32 @@
           <br />by ten seconds!
         </p>
         <button class="btn" id="start">Start Quiz</button>
-      </div>
+      </section>
+
+      <!--Questions Section-->
+      <section id="questions" class="delete">
+        <h2 id="q"></h2>
+        <div id="o" class="options"></div>
+      </section>
+
+      <!--Quiz End section-->
+      <section id="end-quiz" class="delete">
+        <h2>All done!</h2>
+        <p>Your final score is <span id="final-score">.</span></p>
+        <p>
+          Enter initials:<input type="text" id="player-name" />
+          <button id="submit">Submit</button>
+        </p>
+      </section>
+      <!--Quiz End end-->
+
+      <!--answered questions returned-->
+      <section id="answered" class="answered hide"></section>
+      <!--answered questions end-->
     </main>
+    <!--Main End-->
+
+    <!--Script-->
     <script src="assets/js/script.js"></script>
   </body>
 </html>
