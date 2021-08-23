@@ -15,6 +15,45 @@ var timerId;
 var quizStart = function () {
   // delete quizStart
   var quizStartEl = document.getElementById("first-page");
+  quizStartEl.setAttribute("class", "delete");
+
+  // un delete questions section
+  questionsEl.removeAttribute("class");
+
+  // start timer
+  timerId = setInterval(clockTick, 1000);
+
+  // show time
+  timerEl.textContent = time;
+
+  getQuestion();
+};
+
+var findQuestion = function () {
+  // find question from array
+  var currentQuestion = questions[globalIndex];
+
+  // update title with current question
+  var titleEl = document.getElementById("q");
+  titleEl.textContent = currentQuestion.title;
+
+  // clear old question "o"
+  optionsEl.innerHTML = "";
+
+  // loop options
+  currentQuestion.options.forEach(function (option, i) {
+    // creating new buttons
+    var optionNode = document.createElement("button");
+    optionNode.setAttribute("class", "option");
+    optionNode.setAttribute("value", option);
+
+    optionNode.textContent = i + 1 + ". " + option;
+
+    //click even listener
+    optionNode.onclick = //next Function;
+      // add to page
+      optionsEl.appendChild(optionNode);
+  });
 };
 
 // Questions start //
