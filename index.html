@@ -11,17 +11,19 @@
   <body>
     <header>
       <a href="./high-score.html">View high scores</a>
-      <div id="countdown">Time: 0</div>
+      <div>Time: <span id="countdown">0</span></div>
     </header>
     <main class="container">
-      <h1>Coding Quiz Challenge</h1>
-      <p>
-        Try to answer the following code-related questions within the time
-        limit.<br />
-        Keep in mind that incorrect answers will penalize your score/time
-        <br />by ten seconds!
-      </p>
-      <button class="btn" id="start">Start Quiz</button>
+      <div id="main-questions">
+        <h1>Coding Quiz Challenge</h1>
+        <p>
+          Try to answer the following code-related questions within the time
+          limit.<br />
+          Keep in mind that incorrect answers will penalize your score/time
+          <br />by ten seconds!
+        </p>
+        <button class="btn" id="start">Start Quiz</button>
+      </div>
     </main>
     <script src="assets/js/script.js"></script>
   </body>

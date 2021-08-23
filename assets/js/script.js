@@ -1,4 +1,6 @@
-var 
+var timerEl = document.querySelector("#countdown");
+var startBtn = document.querySelector("#start");
+var questionsEl = document.querySelector("#main-questions");
 
 // Questions start //
 var questions = [
@@ -39,3 +41,31 @@ var questions = [
   },
 ];
 /* Questions end */
+
+var highScore = function () {
+  // localStorage score or setting to empty array
+  var playerScore =
+    JSON.parse(window.localStorage.getItem("player-score")) || [];
+
+  // sort highscores by score property
+  playerScore.sort(function (a, b) {
+    return b.score - a.score;
+  });
+
+  playerScore.forEach(function (score) {
+    var listItemEl = document.createElement("li");
+    listItemEl.textContent = score.initials + " - " + score.score;
+
+    var olEl = document.querySelector("#player-score");
+    olEl.appendChild(listItemEl);
+  });
+};
+
+var clearHighScores = function () {
+  window.localStorage.removeItem("player-score");
+  window.location.reload();
+};
+
+document.querySelector("#refresh").onclick = clearHighScores;
+
+highScore();
